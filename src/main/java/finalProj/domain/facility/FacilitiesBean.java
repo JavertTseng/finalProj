@@ -191,24 +191,14 @@ public class FacilitiesBean {
 		this.reservations = reservations;
 	}
 
-    // ---------- toString ----------
+	// ---------- toString ----------
 
-    @Override
-    public String toString() {
-        return "FacilitiesBean{" +
-                "facilityId=" + facilityId +
-                ", communityId=" + communityId +
-                ", facilityName='" + facilityName + '\'' +
-                ", maxUsers=" + maxUsers +
-                ", facilityDescription='" + facilityDescription + '\'' +
-                ", facilityLocation='" + facilityLocation + '\'' +
-                ", openTime=" + openTime +
-                ", closeTime=" + closeTime +
-                ", reservableDuration=" + reservableDuration +
-                ", fee=" + fee +
-                ", facilityStatus='" + facilityStatus + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "FacilitiesBean{" + "facilityId=" + facilityId + ", communityId=" + communityId + ", facilityName='"
+				+ facilityName + '\'' + ", maxUsers=" + maxUsers + ", facilityDescription='" + facilityDescription
+				+ '\'' + ", facilityLocation='" + facilityLocation + '\'' + ", openTime=" + openTime + ", closeTime="
+				+ closeTime + ", reservableDuration=" + reservableDuration + ", fee=" + fee + ", facilityStatus='"
+				+ facilityStatus + '\'' + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + '}';
+	}
 }

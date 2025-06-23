@@ -15,15 +15,15 @@ DROP TABLE if exists point_transaction;
 CREATE TABLE facilities (
 	facility_id INT IDENTITY(1,1) PRIMARY KEY,           -- 公設ID，自動遞增
 	community_id INT,                                    -- 社區識別欄位
-    facility_name NVARCHAR(100) NOT NULL,                -- 公設名稱
+    facility_name NVARCHAR(255) NOT NULL,                -- 公設名稱
 	max_users INT,                                       -- 使用人數上限
     facility_description NVARCHAR(255),                  -- 公設描述
-    facility_location NVARCHAR(100) NOT NULL,            -- 公設地點
+    facility_location NVARCHAR(255) NOT NULL,            -- 公設地點
     open_time TIME NOT NULL,                             -- 開始營運時間
     close_time TIME NOT NULL,                            -- 結束營運時間
     reservable_duration INT,                             -- 單次可預約時長（單位：分鐘）
     fee INT DEFAULT 0 NOT NULL,                          -- 每次預約費用（單位：點數或元）
-	facility_status NVARCHAR(20) DEFAULT 'active',       -- 使用狀態：啟用、停用、維修中等    
+	facility_status NVARCHAR(255) DEFAULT 'active',      -- 使用狀態：啟用、停用、維修中等    
     created_at DATETIME DEFAULT GETDATE(),               -- 建立時間
     updated_at DATETIME                                  -- 最後更新時間
 	--FOREIGN KEY (community_id) REFERENCES communities(community_id),
@@ -46,7 +46,7 @@ CREATE TABLE facility_reservation (
     reservation_id INT IDENTITY(1,1) PRIMARY KEY,          -- 預約紀錄 ID
     community_id INT,                                      -- 所屬社區 ID
     unit_id INT NOT NULL,                                  -- 預約者所屬住戶單位 ID
-    created_by NVARCHAR(100) NOT NULL,                     -- 預約建立人（帳號或姓名）
+    created_by NVARCHAR(255) NOT NULL,                     -- 預約建立人（帳號或姓名）
     facility_id INT NOT NULL,                              -- 預約的設施 ID    
     number_of_users INT,                                   -- 使用人數
     reservation_start_time DATETIME NOT NULL,              -- 預約起始時間
@@ -55,7 +55,7 @@ CREATE TABLE facility_reservation (
     required_points INT,                                   -- 預約所需點數
     actual_used_points INT,                                -- 實際扣除點數
     remark NVARCHAR(255),                                  -- 備註
-    reservation_status NVARCHAR(50) DEFAULT 'APPROVED',    -- 狀態（APPROVED、CANCELLED）
+    reservation_status NVARCHAR(255) DEFAULT 'APPROVED',   -- 狀態（APPROVED、CANCELLED）
     created_at DATETIME DEFAULT GETDATE(),                 -- 建立時間
     updated_at DATETIME,                                   -- 最後修改時間   
     canceled_at DATETIME,                                  -- 取消時間（可為 NULL）
@@ -86,13 +86,13 @@ CREATE TABLE point_source (
     source_id INT IDENTITY(1,1) PRIMARY KEY,          -- 點數來源 ID
     community_id INT NOT NULL,                        -- 所屬社區
     unit_id INT NOT NULL,                             -- 所屬住戶單位
-    source_type NVARCHAR(50) NOT NULL,                -- monthly、topup 等
-    source_description NVARCHAR(50),                  -- 說明點數來源
+    source_type NVARCHAR(255) NOT NULL,               -- monthly、topup 等
+    source_description NVARCHAR(255),                 -- 說明點數來源
     amount INT NOT NULL,                              -- 發放點數
     remaining INT NOT NULL,                           -- 剩餘可用點數
     issued_at DATETIME DEFAULT GETDATE(),             -- 發放時間
     expired_at DATETIME NULL,                         -- 到期時間（NULL 為永久）
-    point_status NVARCHAR(20) DEFAULT 'active'        -- active / expired / used_up
+    point_status NVARCHAR(255) DEFAULT 'active'       -- active / expired / used_up
     -- FOREIGN KEY (unit_id) REFERENCES units(unit_id)
 );
 
