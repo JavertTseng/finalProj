@@ -4,14 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import finalProj.service.facility.FacilityImagesService;
+import finalProj.service.facility.PointSourcesService;
 
 @RestController
-@RequestMapping("/facilityImages")
-public class FacilityImagesController {
+@RequestMapping("/pointSources")
+public class PointSourcesController {
 	
 	@Autowired
-	private FacilityImagesService facilityImagesService;
-	
-	
+	private PointSourcesService pointSourcesService;
 }

@@ -1,6 +1,5 @@
 package finalProj.service.facility;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,55 +15,57 @@ import finalProj.repository.facility.PointAccountsRepository;
 public class PointAccountsServiceImpl implements PointAccountsService {
 
 	@Autowired
-	private PointAccountsRepository pointAccountRepository;
+	private PointAccountsRepository pointAccountsRepository;
 
 	@Override
 	public List<PointAccountsBean> findAll() {
-		return pointAccountRepository.findAll();
+		return pointAccountsRepository.findAll();
 	}
 
 	@Override
 	public PointAccountsBean findById(Integer id) {
-		return pointAccountRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("找不到 ID 為 " + id + " 的帳號。"));
+		return pointAccountsRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("找不到帳戶 ID：" + id));
 	}
 
-//	@Override
-//	public PointAccountBean findByCommunityIdAndUnitId(Integer communityId, Integer unitId) {
-//		return null;
-//	}
+	@Override
+	public PointAccountsBean findByCommunityIdAndUnitId(Integer communityId, Integer unitId) {
+		return pointAccountsRepository.findByCommunityIdAndUnitId(communityId, unitId)
+				.orElseThrow(() -> new ResourceNotFoundException("找不到社區 " + communityId + " 的住戶 " + unitId + " 的帳戶"));
+	}
 
 	@Override
 	public PointAccountsBean save(PointAccountsBean account) {
-		if (account.getAccountId() != null && !pointAccountRepository.existsById(account.getAccountId())) {
-			throw new ResourceNotFoundException("無法更新，找不到公設 ID: " + account.getAccountId());
-		}
-		return pointAccountRepository.save(account);
+		return pointAccountsRepository.save(account);
 	}
 
 	@Override
 	public PointAccountsBean increasePoints(Integer accountId, int amount, String sourceType) {
-		PointAccountsBean account = pointAccountRepository.findById(accountId)
-				.orElseThrow(() -> new ResourceNotFoundException("找不到帳戶 ID：" + accountId));
-
-		if ("topup".equalsIgnoreCase(sourceType)) {
+		PointAccountsBean account = findById(accountId);
+		if ("topup".equals(sourceType)) {
 			account.setTopupBalance(account.getTopupBalance() + amount);
-		} else {
-			account.setSystemBalance(account.getSystemBalance() + amount);
+		}else {
+			account.setSystemBalance(account.getSystemBalance() + amount);			
 		}
-	    account.setTotalBalance(account.getTotalBalance() + amount);
-	    account.setUpdatedAt(LocalDateTime.now());
-		return null;
+		account.setTotalBalance(account.getTotalBalance() + amount);
+		// 若你有另外紀錄 PointSources，可在這裡新增來源紀錄
+		return pointAccountsRepository.save(account);
 	}
 
 	@Override
 	public PointAccountsBean decreasePoints(Integer accountId, int amount) {
-		return null;
+		PointAccountsBean account = findById(accountId);
+		if (account.getTotalBalance() < amount) {
+			throw new IllegalArgumentException("點數不足，無法扣除。");
+		}
+		account.setTotalBalance(account.getTotalBalance() - amount);
+		return pointAccountsRepository.save(account);
 	}
 
 	@Override
 	public void deleteById(Integer id) {
-
+		if (!pointAccountsRepository.existsById(id)) {
+			throw new ResourceNotFoundException("帳戶 ID 不存在，無法刪除：" + id);
+		}
+		pointAccountsRepository.deleteById(id);
 	}
-
 }

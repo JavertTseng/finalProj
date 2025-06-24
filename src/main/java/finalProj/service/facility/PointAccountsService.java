@@ -12,8 +12,8 @@ public interface PointAccountsService {
 	// 依帳戶 ID 查單筆
 	PointAccountsBean findById(Integer id);
 
-//	// 依社區與住戶 ID 查找（唯一值）
-//	PointAccountBean findByCommunityIdAndUnitId(Integer communityId, Integer unitId);
+	// 依社區與住戶 ID 查找（唯一值）
+	PointAccountsBean findByCommunityIdAndUnitId(Integer communityId, Integer unitId);
 
 	// 新增或更新帳戶（首次建立或系統調整用）
 	PointAccountsBean save(PointAccountsBean account);

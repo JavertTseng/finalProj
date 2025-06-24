@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import finalProj.service.facility.FacilityReservationsService;
 
 @RestController
-@RequestMapping("/facility/reservations")
+@RequestMapping("/FacilityReservations")
 public class FacilityReservationsController {
 	
 	@Autowired

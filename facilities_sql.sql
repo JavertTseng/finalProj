@@ -4,12 +4,12 @@
 
 Use finalProj;
 
-DROP TABLE if exists facilities;
-DROP TABLE if exists facility_images;
 DROP TABLE if exists facility_reservations;
-DROP TABLE if exists point_accounts;
-DROP TABLE if exists point_sources;
+DROP TABLE if exists facility_images;
+DROP TABLE if exists facilities;
 DROP TABLE if exists point_transactions;
+DROP TABLE if exists point_sources;
+DROP TABLE if exists point_accounts;
 
 -- 公共設施表
 CREATE TABLE facilities (
@@ -105,9 +105,11 @@ CREATE TABLE point_transactions (
     change_type NVARCHAR(50) NOT NULL,                 -- reservation / cancel / topup / transfer_in / transfer_out...
     amount INT NOT NULL,                               -- 正為加點，負為扣點
     related_unit_id INT NULL,                          -- 轉移點數時的對象住戶
+	related_reservation_id INT NULL,                   -- 轉移點數時的對象住戶
     transaction_description NVARCHAR(255),             -- 備註說明
     created_at DATETIME DEFAULT GETDATE(),             -- 建立時間
-    FOREIGN KEY (source_id) REFERENCES point_source(source_id)
+    FOREIGN KEY (source_id) REFERENCES point_sources(source_id),
+    FOREIGN KEY (related_reservation_id) REFERENCES facility_reservations(reservation_id)
 );
 
 
@@ -175,10 +177,11 @@ INSERT INTO point_sources (
 ) VALUES
 (1, 101, 'monthly', 100, 100, GETDATE(), '2025-07-31', 'active'),   
 (1, 102, 'monthly', 100, 100, GETDATE(), '2025-07-31', 'active'),   -- 李四：領 100 系統點 + 儲值 50
-(1, 102, 'topup', 50, 50, GETDATE(), NULL, 'active'),               
+(1, 102, 'topup', 50, 50, GETDATE(), '2999-12-31', 'active'),               
 (1, 103, 'monthly', 100, 80, GETDATE(), '2025-07-31', 'active'),    -- 王五：領 100 系統點，用掉 20（剩 80）
+(1, 104, 'monthly', 50, 50, GETDATE(), '2025-06-30', 'active'),
 (1, 104, 'monthly', 100, 100, GETDATE(), '2025-07-31', 'active'),   -- 陳六：領 100 系統點 + 儲值 100
-(1, 104, 'topup', 100, 100, GETDATE(), NULL, 'active');
+(1, 104, 'topup', 100, 100, GETDATE(), '2999-12-31', 'active');
 
 
 --TRUNCATE TABLE point_transactions;

@@ -1,5 +1,14 @@
 package finalProj.controller;
 
-public class PointAccountsController {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import finalProj.service.facility.PointAccountsService;
+
+@RestController
+@RequestMapping("/pointAccounts")
+public class PointAccountsController {
+	@Autowired
+	private PointAccountsService pointAccountsService;
 }
