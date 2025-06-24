@@ -14,8 +14,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "facility_reservation")
-public class FacilityReservationBean {
+@Table(name = "facility_reservations")
+public class FacilityReservationsBean {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

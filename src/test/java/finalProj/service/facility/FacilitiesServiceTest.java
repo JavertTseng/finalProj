@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import finalProj.domain.facility.FacilitiesBean;
+import finalProj.exception.ResourceNotFoundException;
 
 @SpringBootTest
 public class FacilitiesServiceTest {
@@ -43,7 +45,7 @@ public class FacilitiesServiceTest {
 	@Test
 	public void testFindById() {
 		// Arrange
-		Integer facilityId = 1;
+		Integer facilityId = 11;
 
 		// Act
 		FacilitiesBean facility = facilitiesService.findById(facilityId);
@@ -62,10 +64,10 @@ public class FacilitiesServiceTest {
 		assertNotNull(facilities);
 		assertFalse(facilities.isEmpty());
 
-		FacilitiesBean firstFacility = facilities.get(0);
+		FacilitiesBean firstFacility = facilities.get(7);
 
-		System.out.println("第一筆公設名稱：" + firstFacility.getFacilityName());
-		assertEquals("交誼廳", firstFacility.getFacilityName()); // 根據你 insert 的順序來設計
+		System.out.println("第8筆公設名稱：" + firstFacility.getFacilityName());
+		assertEquals("停車格A2", firstFacility.getFacilityName()); // 根據你 insert 的順序來設計
 	}
 
 	@Test
@@ -79,5 +81,19 @@ public class FacilitiesServiceTest {
 		FacilitiesBean deletedBean = facilitiesService.findById(deletedId);
 
 		assertNull(deletedBean);
+	}
+
+	@Test
+	public void testFindById_NotFound() {
+		Integer nonexistentId = 9999; // 假設這個 ID 不存在
+
+		Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
+			facilitiesService.findById(nonexistentId);
+		});
+
+		String expectedMessage = "找不到 ID 為 " + nonexistentId + " 的設施。";
+		String actualMessage = exception.getMessage();
+		System.out.println(actualMessage);
+		assertEquals(expectedMessage, actualMessage);
 	}
 }

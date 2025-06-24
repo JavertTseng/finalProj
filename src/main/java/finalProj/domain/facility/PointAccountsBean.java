@@ -12,10 +12,10 @@ import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Table(
-	name = "point_account",
+	name = "point_accounts",
 	uniqueConstraints = @UniqueConstraint(columnNames = {"unit_id", "community_id"})
 	)
-public class PointAccountBean {
+public class PointAccountsBean {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

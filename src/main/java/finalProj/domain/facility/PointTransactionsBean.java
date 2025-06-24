@@ -14,8 +14,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "point_transaction")
-public class PointTransactionBean {
+@Table(name = "point_transactions")
+public class PointTransactionsBean {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +31,7 @@ public class PointTransactionBean {
     @ManyToOne
     @JoinColumn(name = "source_id", referencedColumnName = "source_id")
     @JsonBackReference("source-transaction")
-    private PointSourceBean source;
+    private PointSourcesBean source;
 
     @Column(name = "change_type", nullable = false)
     private String changeType;
@@ -74,11 +74,11 @@ public class PointTransactionBean {
         this.unitId = unitId;
     }
 
-    public PointSourceBean getSource() {
+    public PointSourcesBean getSource() {
         return source;
     }
 
-    public void setSource(PointSourceBean source) {
+    public void setSource(PointSourcesBean source) {
         this.source = source;
     }
 

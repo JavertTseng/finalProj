@@ -67,7 +67,7 @@ public class FacilitiesBean {
 
 	@OneToMany(mappedBy = "facility", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonManagedReference("facility-reservations")
-	private List<FacilityReservationBean> reservations;
+	private List<FacilityReservationsBean> reservations;
 
 	// ---------- Getter & Setter ----------
 
@@ -183,11 +183,11 @@ public class FacilitiesBean {
 		this.images = images;
 	}
 
-	public List<FacilityReservationBean> getReservations() {
+	public List<FacilityReservationsBean> getReservations() {
 		return reservations;
 	}
 
-	public void setReservations(List<FacilityReservationBean> reservations) {
+	public void setReservations(List<FacilityReservationsBean> reservations) {
 		this.reservations = reservations;
 	}
 

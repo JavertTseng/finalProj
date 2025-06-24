@@ -13,31 +13,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import finalProj.domain.facility.FacilitiesBean;
-import finalProj.domain.facility.FacilityReservationBean;
+import finalProj.domain.facility.FacilityReservationsBean;
 
 @SpringBootTest
-public class FacilityReservationServiceTest {
+public class FacilityReservationsServiceTest {
 
 	@Autowired
-	private FacilityReservationService facilityReservationService;
+	private FacilityReservationsService facilityReservationService;
 
 	@Test
 	public void testFindById() {
-		FacilityReservationBean reservation = facilityReservationService.findById(7);
+		FacilityReservationsBean reservation = facilityReservationService.findById(7);
 		assertNotNull(reservation);
 		System.out.println(reservation);
 	}
 
 	@Test
 	public void testFindAll() {
-		List<FacilityReservationBean> reservation = facilityReservationService.findAll();
+		List<FacilityReservationsBean> reservation = facilityReservationService.findAll();
 		assertNotNull(reservation);
 		assertTrue(reservation.size() >= 0);
 	}
 
 	@Test
 	public void testSave() {
-		FacilityReservationBean reservation = new FacilityReservationBean();
+		FacilityReservationsBean reservation = new FacilityReservationsBean();
 		FacilitiesBean facility = new FacilitiesBean();
 		facility.setFacilityId(1); // 必須確保這個 ID 在資料庫中已存在
 
@@ -49,7 +49,7 @@ public class FacilityReservationServiceTest {
 		reservation.setReservationStatus("APPROVED");
 		reservation.setNumberOfUsers(2);
 
-		FacilityReservationBean saved = facilityReservationService.save(reservation);
+		FacilityReservationsBean saved = facilityReservationService.save(reservation);
 		assertNotNull(saved.getReservationId());
 	}
 
@@ -63,7 +63,7 @@ public class FacilityReservationServiceTest {
 
 	@Test
 	public void testFindByUnitId() {
-		List<FacilityReservationBean> result = facilityReservationService.findByUnitId(101);
+		List<FacilityReservationsBean> result = facilityReservationService.findByUnitId(101);
 		assertNotNull(result);
 		result.forEach(System.out::println);
 	}
@@ -73,7 +73,7 @@ public class FacilityReservationServiceTest {
 		LocalDateTime start = LocalDateTime.now().with(LocalTime.of(8, 0)); //當天早上8:00
 		LocalDateTime end = start.plusDays(7);//往後5天內都算
 
-		List<FacilityReservationBean> result = facilityReservationService.findByFacilityIdAndTimeRange(2, start, end);
+		List<FacilityReservationsBean> result = facilityReservationService.findByFacilityIdAndTimeRange(2, start, end);
 		assertNotNull(result);
 		result.forEach(System.out::println);
 	}

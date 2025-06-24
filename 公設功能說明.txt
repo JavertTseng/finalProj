@@ -1,0 +1,27 @@
+公設表facilities;
+1.新增(管理員可以新增公設)->save
+2.修改(管理員可以修改公設)->save
+3.刪除(管理員可以修改公設)->delete
+4.查詢(使用者可以查詢有哪些公設，進行預定)-findAll, findByName
+
+公設照片facility_images;
+1.新增(管理員可以新增公設照片)->save
+2.修改(管理員可以修改公設照片、排序)->save
+3.刪除(管理員可以修改公設照片)->delete
+4.查詢(顯示所有公設照片)-findAll,
+
+
+公設預約表facility_reservation;
+1.新增(管理員可以新增公設照片)->save
+2.修改(管理員可以修改公設照片、排序)->save
+3.刪除(管理員可以修改公設照片)->delete
+4.查詢(顯示所有公設照片)-findAll,
+
+
+點數帳戶point_account;
+
+
+點數帳戶來源point_source;
+
+
+點數交易紀錄point_transaction;

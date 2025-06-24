@@ -6,10 +6,10 @@ Use finalProj;
 
 DROP TABLE if exists facilities;
 DROP TABLE if exists facility_images;
-DROP TABLE if exists facility_reservation;
-DROP TABLE if exists point_account;
-DROP TABLE if exists point_source;
-DROP TABLE if exists point_transaction;
+DROP TABLE if exists facility_reservations;
+DROP TABLE if exists point_accounts;
+DROP TABLE if exists point_sources;
+DROP TABLE if exists point_transactions;
 
 -- 公共設施表
 CREATE TABLE facilities (
@@ -42,7 +42,7 @@ CREATE TABLE facility_images (
 );
 
 -- 公設預約表
-CREATE TABLE facility_reservation (
+CREATE TABLE facility_reservations (
     reservation_id INT IDENTITY(1,1) PRIMARY KEY,          -- 預約紀錄 ID
     community_id INT,                                      -- 所屬社區 ID
     unit_id INT NOT NULL,                                  -- 預約者所屬住戶單位 ID
@@ -67,7 +67,7 @@ CREATE TABLE facility_reservation (
 
 
 -- 住戶點數帳戶表 (point_accounts)，記錄每戶當前可用點數
-CREATE TABLE point_account (
+CREATE TABLE point_accounts (
     account_id INT IDENTITY(1,1) PRIMARY KEY,        -- 帳戶編號
     community_id INT NOT NULL,                       -- 所屬社區
     unit_id INT NOT NULL,                            -- 所屬住戶單位
@@ -82,7 +82,7 @@ CREATE TABLE point_account (
 );
 
 -- 點數來源與效期明細表 (point_sources)
-CREATE TABLE point_source (
+CREATE TABLE point_sources (
     source_id INT IDENTITY(1,1) PRIMARY KEY,          -- 點數來源 ID
     community_id INT NOT NULL,                        -- 所屬社區
     unit_id INT NOT NULL,                             -- 所屬住戶單位
@@ -97,7 +97,7 @@ CREATE TABLE point_source (
 );
 
 -- 點數交易紀錄表 (point_transactions)
-CREATE TABLE point_transaction (
+CREATE TABLE point_transactions (
     transaction_id INT IDENTITY(1,1) PRIMARY KEY,      -- 交易 ID
     community_id INT NOT NULL,                         -- 所屬社區
     unit_id INT NOT NULL,                              -- 當事住戶單位
@@ -139,8 +139,8 @@ VALUES
 (8, '/images/facilities/parking_grid.jpg', N'地下停車場 A2 車位', 0);
 
 
---TRUNCATE TABLE facility_reservation;
-INSERT INTO facility_reservation (
+--TRUNCATE TABLE facility_reservations;
+INSERT INTO facility_reservations (
     community_id, unit_id, created_by, facility_id,
     number_of_users, reservation_start_time, reservation_end_time,
     is_admin, required_points, actual_used_points, remark,
@@ -158,8 +158,8 @@ INSERT INTO facility_reservation (
 (1, 104, N'陳六', 4, 2, '2025-06-29 20:00', '2025-06-29 21:00', 0, 10, 10, NULL, 'APPROVED', GETDATE());
 
 
---TRUNCATE TABLE point_account;
-INSERT INTO point_account (
+--TRUNCATE TABLE point_accounts;
+INSERT INTO point_accounts (
     community_id, unit_id, total_balance, system_balance, topup_balance, updated_at
 ) VALUES
 (1, 101, 100, 100, 0, GETDATE()),   -- 張三：剛領 100 系統點
@@ -169,8 +169,8 @@ INSERT INTO point_account (
 (1, 105, 0, 0, 0, GETDATE());       -- 林七：尚未領點
 
 
---TRUNCATE TABLE point_source;
-INSERT INTO point_source (
+--TRUNCATE TABLE point_sources;
+INSERT INTO point_sources (
     community_id, unit_id, source_type, amount, remaining, issued_at, expired_at, point_status
 ) VALUES
 (1, 101, 'monthly', 100, 100, GETDATE(), '2025-07-31', 'active'),   
@@ -181,8 +181,8 @@ INSERT INTO point_source (
 (1, 104, 'topup', 100, 100, GETDATE(), NULL, 'active');
 
 
---TRUNCATE TABLE point_transaction;
-INSERT INTO point_transaction (
+--TRUNCATE TABLE point_transactions;
+INSERT INTO point_transactions (
     community_id, unit_id, source_id, change_type, amount,
     related_unit_id, transaction_description, created_at
 ) VALUES

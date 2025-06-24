@@ -16,8 +16,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "point_source")
-public class PointSourceBean {
+@Table(name = "point_sources")
+public class PointSourcesBean {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,15 +53,15 @@ public class PointSourceBean {
 
 	@OneToMany(mappedBy = "source", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonManagedReference("source-transaction")
-	private List<PointTransactionBean> transactions;
+	private List<PointTransactionsBean> transactions;
 	
 	// ---------- Getters & Setters ----------
 
-	public List<PointTransactionBean> getTransactions() {
+	public List<PointTransactionsBean> getTransactions() {
 	    return transactions;
 	}
 
-	public void setTransactions(List<PointTransactionBean> transactions) {
+	public void setTransactions(List<PointTransactionsBean> transactions) {
 	    this.transactions = transactions;
 	}	
 	
